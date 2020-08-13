@@ -1,8 +1,17 @@
 <div fxFill>
   <div fxLayout="column" fxLayoutAlign="space-around stretch" fxFill>
     <div fxFlex="80" style="background-color: rgb(234, 226, 183); padding: 10px;">
-      <mat-list fxFill>
-
+      <mat-list fxFill class="chat-messages">
+        <mat-list-item *ngFor="let m of messages" [class.msg-from-me]="m.from===username">
+          <h4 mat-line>
+            <strong>
+              {{m.from}}
+            </strong>
+          </h4>
+          <p mat-line>
+            {{m.message}}
+          </p>
+        </mat-list-item>
 
       </mat-list>
     </div>
@@ -10,13 +19,14 @@
       fxLayoutAlign="space-around center">
 
       <mat-form-field fxFlex="20">
-        <input matInput placeholder="Nickname">
+        <input matInput autocomplete="off" placeholder="Username" name="username" [(ngModel)]="username">
       </mat-form-field>
       <mat-form-field fxFlex="60">
-        <input matInput placeholder="Message">
+        <input matInput autocomplete="off" name="message" placeholder="Message" [(ngModel)]="message"
+          (keyup.enter)="send()">
       </mat-form-field>
 
-      <button mat-button color="dark">
+      <button mat-button color="dark" (click)="send()">
         <mat-icon>send</mat-icon>
       </button>
     </div>
